@@ -1,17 +1,20 @@
 #include<iostream>
 #include<string>
 #include <vector>
+#include <array>
 using namespace std;
+
+int global_counter = 0;
 
 struct minmax {
 	int min;
 	int max;
-	int count = 0;
 };
 
-void printarr(int A[])
+
+void printarr(int A[], int n)
 {
-	for (int i = 0; i < sizeof(A); i++)
+	for (int i = 0; i <n; i++)
 	{
 		cout << A[i] << " ";
 	}
@@ -29,7 +32,7 @@ void printVector(vector<int>& A)
 void itminmax(int A[], int n)
 {
 	//printing the initial array
-	printarr(A);
+	//printarr(A,n);
 
 	cout << "\n";
 
@@ -42,13 +45,15 @@ void itminmax(int A[], int n)
 		if (A[i] < min)
 		{
 			min = A[i];
-			count++;
+			
 		}
+		count++;
 		if (A[i] > max)
 		{
 			max = A[i];
-			count++;
 		}
+		count++;
+		
 	}
 
 	cout << "The max is: " << max << "\n";
@@ -76,24 +81,39 @@ minmax minmaxDAC(int A[], int low, int high)
 		{
 			result.min = A[low];
 			result.max = A[high];
-			result.count = result.count++;
+			global_counter++;
 		}
 		else
 		{
 			result.min = A[high];
 			result.max = A[low];
-			result.count = result.count++;
 		}
+		return result;
 	}
 
 	mid = (low + high) / 2; //finding the mid point of the array
 	left = minmaxDAC(A, low, mid); //returns the min and max from the left side of the array
 	right = minmaxDAC(A, mid + 1, high);//returns the min and max from the right side of the array
 
-	result.max = (left.max > right.max) ? left.max : right.max;
-    result.count++;
-	result.min = (left.min < right.min) ? left.min : right.min;
-	result.count++;
+	global_counter++;
+	if (left.max > right.max)
+	{
+		result.max = left.max;
+	}
+	else
+	{
+		result.max = right.max;
+	}
+
+	global_counter++;
+	if (left.min < right.min)
+	{
+		result.min = left.min;
+	}
+	else
+	{
+		result.min = right.min;
+	}
 
 	return result;
 }
@@ -116,7 +136,7 @@ void selectionsort(int A[], int curIndex, int n)
 	if (curIndex == n)
 	{
 		//the entire array has been sorted becuase index and size are the same
-		printarr(A);
+		printarr(A,n);
 		return;
 	}
 
@@ -246,21 +266,180 @@ void quickSort1(int A[], int low, int high)
 
 int main()
 {
-	int A[8] = { 1,6,4,0,9,2,3,6 };
+	int A[1];
+	int B[100];
+	int C[200];
+	int D[300];
+	int E[400];
+	int F[500];
+	int G[600];
+	int H[700];
+	int I[800];
+	int J[900];
+	int K[1000];
+
+	for (int i = 0; i < sizeof(A) / sizeof(A[0]); i++)
+	{
+		A[i] = i;
+	}
+	for (int i = 0; i < sizeof(B) / sizeof(B[0]); i++)
+	{
+		B[i] = i;
+	}
+	for (int i = 0; i < sizeof(C) / sizeof(C[0]); i++)
+	{
+		C[i] = i;
+	}
+	for (int i = 0; i < sizeof(D) / sizeof(D[0]); i++)
+	{
+		D[i] = i;
+	}
+	for (int i = 0; i < sizeof(E) / sizeof(E[0]); i++)
+	{
+		E[i] = i;
+	}
+	for (int i = 0; i < sizeof(F) / sizeof(F[0]); i++)
+	{
+		F[i] = i;
+	}
+	for (int i = 0; i < sizeof(G) / sizeof(G[0]); i++)
+	{
+		G[i] = i;
+	}
+	for (int i = 0; i < sizeof(H) / sizeof(H[0]); i++)
+	{
+		H[i] = i;
+	}
+	for (int i = 0; i < sizeof(I) / sizeof(I[0]); i++)
+	{
+		I[i] = i;
+	}
+	for (int i = 0; i < sizeof(J) / sizeof(J[0]); i++)
+	{
+		J[i] = i;
+	}
+	for (int i = 0; i < sizeof(K) / sizeof(K[0]); i++)
+	{
+		K[i] = i;
+	}
 
 	//calling iterative minmax algorithm
 	int n = sizeof(A) / sizeof(A[0]);
 	itminmax(A,n);
-	
+
 	//calling divide and conquer minmax algorithm
 	minmax result;
 	n = sizeof(A) / sizeof(A[0]);
 	result = minmaxDAC(A, 0, n - 1);
 	cout << "The max is: " << result.max << "\n";
 	cout << "The min is: " << result.min << "\n";
-	cout << "The number of comparisons made on the " << n << " size array was: " << result.count << "\n";
+	cout << "The number of comparisons made on the " << n << " size array was: " << global_counter << "\n";
+	
+	global_counter = 0;
+	cout << global_counter << "\n";
 
-	//calling recursive selection sort
+	n = sizeof(B) / sizeof(B[0]);
+	itminmax(B, n);
+	n = sizeof(B) / sizeof(B[0]);
+	result = minmaxDAC(B, 0, n - 1);
+	cout << "The max is: " << result.max << "\n";
+	cout << "The min is: " << result.min << "\n";
+	cout << "The number of comparisons made on the " << n << " size array was: " << global_counter << "\n";
+
+	global_counter = 0;
+	cout << global_counter << "\n";
+
+	n = sizeof(C) / sizeof(C[0]);
+	itminmax(C, n);
+	result = minmaxDAC(C, 0, n - 1);
+	cout << "The max is: " << result.max << "\n";
+	cout << "The min is: " << result.min << "\n";
+	cout << "The number of comparisons made on the " << n << " size array was: " << global_counter << "\n";
+
+	global_counter = 0;
+	cout << global_counter << "\n";
+
+	n = sizeof(D) / sizeof(D[0]);
+	itminmax(D, n);
+	result = minmaxDAC(D, 0, n - 1);
+	cout << "The max is: " << result.max << "\n";
+	cout << "The min is: " << result.min << "\n";
+	cout << "The number of comparisons made on the " << n << " size array was: " << global_counter << "\n";
+
+	global_counter = 0;
+	cout << global_counter << "\n";
+
+	n = sizeof(E) / sizeof(E[0]);
+	itminmax(E, n);
+	result = minmaxDAC(E, 0, n - 1);
+	cout << "The max is: " << result.max << "\n";
+	cout << "The min is: " << result.min << "\n";
+	cout << "The number of comparisons made on the " << n << " size array was: " << global_counter << "\n";
+
+	global_counter = 0;
+	cout << global_counter << "\n";
+
+	n = sizeof(F) / sizeof(F[0]);
+	itminmax(F, n);
+	result = minmaxDAC(F, 0, n - 1);
+	cout << "The max is: " << result.max << "\n";
+	cout << "The min is: " << result.min << "\n";
+	cout << "The number of comparisons made on the " << n << " size array was: " << global_counter << "\n";
+
+	global_counter = 0;
+	cout << global_counter << "\n";
+
+	n = sizeof(G) / sizeof(G[0]);
+	itminmax(G, n);
+	result = minmaxDAC(G, 0, n - 1);
+	cout << "The max is: " << result.max << "\n";
+	cout << "The min is: " << result.min << "\n";
+	cout << "The number of comparisons made on the " << n << " size array was: " << global_counter << "\n";
+
+	global_counter = 0;
+	cout << global_counter << "\n";
+
+	n = sizeof(H) / sizeof(H[0]);
+	itminmax(H, n);
+	result = minmaxDAC(H, 0, n - 1);
+	cout << "The max is: " << result.max << "\n";
+	cout << "The min is: " << result.min << "\n";
+	cout << "The number of comparisons made on the " << n << " size array was: " << global_counter << "\n";
+
+	global_counter = 0;
+	cout << global_counter << "\n";
+
+	n = sizeof(I) / sizeof(I[0]);
+	itminmax(I, n);
+	result = minmaxDAC(I, 0, n - 1);
+	cout << "The max is: " << result.max << "\n";
+	cout << "The min is: " << result.min << "\n";
+	cout << "The number of comparisons made on the " << n << " size array was: " << global_counter << "\n";
+
+	global_counter = 0;
+	cout << global_counter << "\n";
+
+	n = sizeof(J) / sizeof(J[0]);
+	itminmax(J, n);
+	result = minmaxDAC(J, 0, n - 1);
+	cout << "The max is: " << result.max << "\n";
+	cout << "The min is: " << result.min << "\n";
+	cout << "The number of comparisons made on the " << n << " size array was: " << global_counter << "\n";
+
+	global_counter = 0;
+	cout << global_counter << "\n";
+
+	n = sizeof(K) / sizeof(K[0]);
+	itminmax(K, n);
+	result = minmaxDAC(K, 0, n - 1);
+	cout << "The max is: " << result.max << "\n";
+	cout << "The min is: " << result.min << "\n";
+	cout << "The number of comparisons made on the " << n << " size array was: " << global_counter << "\n";
+
+	global_counter = 0;
+	cout << global_counter << "\n";
+
+	/*calling recursive selection sort
 	cout << "Selection Sort: " << "\n";
 	selectionsort(A, 0, n);
 	cout << "\n";
@@ -291,7 +470,7 @@ int main()
 	n = sizeof(D) / sizeof(D[0]);
 	quickSort1(D, 0, n-1);
 	printarr(D);
-	cout << "\n";
+	cout << "\n";*/
 
 	return 0;
 }
